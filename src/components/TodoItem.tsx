@@ -9,15 +9,10 @@ interface Props {
 
 const TodoItem = ({ todoItem, handleTodoState, handleRemoveTodo }: Props) => {
   return (
-    <li
-      className={`todo-item ${todoItem.state === 1 ? "completed" : ""}`}>
+    <li className={`todo-item ${todoItem.state === 1 ? "completed" : ""}`}>
       <label data-todoid={todoItem.id} onClick={handleTodoState}>
         <span className="btn-checkbox"></span>
-        <span
-          className="todo-text"
-        >
-          {todoItem.name}
-        </span>
+        <span className="todo-text">{todoItem.name}</span>
       </label>
       <span
         id="btn-delete-todo"
