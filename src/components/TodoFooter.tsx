@@ -19,7 +19,7 @@ const TodoFooter = ({
   }
 
   const handleStateChange = (li: MouseEvent<HTMLLIElement>) => {
-    const state = li.target?.attributes["value"]?.value;
+    const state = (li.target as HTMLInputElement)?.value;
     setSelectedState(state);
   };
 

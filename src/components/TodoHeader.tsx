@@ -1,4 +1,4 @@
-import { MouseEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const TodoHeader = () => {
   const [theme, setTheme] = useState<string | null>(
