@@ -1,27 +1,14 @@
-import { MouseEvent } from "react";
 import { todoItem } from "./helper/helper";
+import { Link, useSearchParams } from "react-router-dom";
 
 interface Props {
   todoItems: todoItem[];
   setTodoItems: (todoItems: todoItem[]) => void;
-  selectedState?: string;
-  setSelectedState: (selectedState: string) => void;
 }
 
-const TodoFooter = ({
-  todoItems,
-  setTodoItems,
-  selectedState,
-  setSelectedState,
-}: Props) => {
-  if (!selectedState) {
-    selectedState = "all";
-  }
-
-  const handleStateChange = (li: MouseEvent<HTMLLIElement>) => {
-    const state = (li.target as HTMLInputElement)?.value;
-    setSelectedState(state);
-  };
+const TodoFooter = ({ todoItems, setTodoItems }: Props) => {
+  const [params] = useSearchParams();
+  const state: string = params.get("todos") ?? "";
 
   const handleClearCompleted = () => {
     const items = todoItems.filter(
@@ -39,36 +26,29 @@ const TodoFooter = ({
             : "No"
         } items left!`}
       </p>
-      <ul className="todo-states">
-        <li
-          className={`todo-state ${selectedState === "all" ? "selected" : ""}`}
-          onClick={handleStateChange}
-          value="all"
-          key="all"
+      <nav className="todo-states">
+        <Link
+          to=""
+          // onClick={handleStateChange}
+          className={`todo-state ${
+            state === "all" || state === "" ? "active" : ""
+          }`}
         >
           All
-        </li>
-        <li
-          className={`todo-state ${
-            selectedState === "active" ? "selected" : ""
-          }`}
-          onClick={handleStateChange}
-          value="active"
-          key="active"
+        </Link>
+        <Link
+          to="?todos=active"
+          className={`todo-state ${state === "active" ? "active" : ""}`}
         >
           Active
-        </li>
-        <li
-          className={`todo-state ${
-            selectedState === "completed" ? "selected" : ""
-          }`}
-          onClick={handleStateChange}
-          value="completed"
-          key="completed"
+        </Link>
+        <Link
+          to="?todos=completed"
+          className={`todo-state ${state === "completed" ? "active" : ""}`}
         >
           Completed
-        </li>
-      </ul>
+        </Link>
+      </nav>
       <button id="btn-clear-completed" onClick={handleClearCompleted}>
         Clear Completed
       </button>

@@ -149,6 +149,7 @@ body {
 
                     &.completed {
                         text-decoration: line-through;
+                        color: $dark-grayish-blue;
 
                         .btn-checkbox {
                             position: relative;
@@ -186,6 +187,7 @@ body {
             border-radius: 8px;
             font-size: .9rem;
             box-shadow: 0 0 100px -20px hsl(220, 98%, 61%);
+            z-index: 1;
 
             .todo-states {
                 @include flex-box;
@@ -195,10 +197,16 @@ body {
                 .todo-state {
                     list-style: none;
                     cursor: pointer;
+                    text-decoration: none;
+                    color: $light-grayish-blue;
 
-                    &.selected {
+                    &.active {
                         color: hsl(220, 98%, 61%);
                         font-weight: 700;
+                    }
+
+                    &:hover {
+                        color: hsl(192, 100%, 67%);
                     }
                 }
             }
