@@ -9,17 +9,19 @@ interface Props {
 }
 
 const TodoContainer = ({ todoItems, setTodoItems, selectedState }: Props) => {
-  const handleTodoState = (label: MouseEvent<HTMLInputElement>) => {
-    let todoID = label.target?.attributes["todo-id"]?.value;
+  const handleTodoState = (label: MouseEvent<HTMLLabelElement>) => {
+    const target: HTMLElement = label.target as HTMLElement;
+
+    let todoID: string|undefined = target?.dataset?.todoid;
     if (!todoID) {
-      todoID = label.target.parentElement?.attributes["todo-id"]?.value;
+      todoID = target.parentElement?.dataset?.todoid;
     }
     if (!todoID) {
       return;
     }
 
     const items = todoItems.map((todoItem: todoItem) => {
-      if (todoID == todoItem.id) {
+      if (Number(todoID) == todoItem.id) {
         todoItem.state = Number(!todoItem.state);
       }
       return todoItem;
@@ -28,9 +30,9 @@ const TodoContainer = ({ todoItems, setTodoItems, selectedState }: Props) => {
   };
 
   const handleRemoveTodo = (btn: MouseEvent<HTMLButtonElement>) => {
-    const todoID = btn.target?.attributes["todo-id"]?.value;
+    const todoID: string|undefined = (btn.target as HTMLElement)?.dataset?.todoid;
     setTodoItems(
-      todoItems.filter((todoItem: todoItem) => todoID != todoItem.id)
+      todoItems.filter((todoItem: todoItem) => Number(todoID) != todoItem.id)
     );
   };
 
@@ -50,6 +52,7 @@ const TodoContainer = ({ todoItems, setTodoItems, selectedState }: Props) => {
           .map((todoItem: todoItem) => {
             return (
               <TodoItem
+                key={todoItem.id}
                 todoItem={todoItem}
                 handleTodoState={handleTodoState}
                 handleRemoveTodo={handleRemoveTodo}
