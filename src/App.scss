@@ -126,25 +126,69 @@ body {
                     list-style: none;
                     padding: 1em;
                     @include flex-box(row, space-between);
+                    gap: .4em;
                     background-color: $secondary-color;
                     border-bottom: 1px solid hsl(234, 11%, 52%);
+
+                    &.editing {
+                        padding: 0 1em;
+                        border-bottom: 1px solid hsl(220, 98%, 61%);
+                    }
 
                     label {
                         @include flex-box;
                         gap: .5em;
 
                         .btn-checkbox {
-                            width: 20px;
-                            height: 20px;
+                            min-width: 20px;
+                            min-height: 20px;
                             border-radius: 50%;
                             border: 1px solid $font-color;
                         }
                     }
 
-                    #btn-delete-todo {
+                    form {
+                        width: 100%;
+
+                        input.update-todo {
+                            width: 100%;
+                            padding: 1.47em 0;
+                            font-size: 1rem;
+                            background-color: transparent;
+                            color: $font-color;
+                            outline: 0;
+                            border: 0;
+                            flex-grow: 1;
+                        }
+                    }
+
+                    .spacer { flex-grow: 1; }
+
+                    .todo-btn {
                         width: 26px;
                         height: 26px;
+                    }
+                    
+                    .btn-edit-todo {
+                        background: url('/images/icon-edit.png') no-repeat center 100%/100%;
+                        scale: 0;
+                        transition: all 100ms ease-in-out;
+                    }
+
+                    .btn-update-todo {
+                        background: url('/images/icon-checkmark.svg') no-repeat center 100%/100%;
+                        transition: all 100ms ease-in-out;
+                    }
+
+                    .btn-delete-todo {
+                        float: right;
                         background: url('/images/icon-cross.svg') no-repeat center;
+                    }
+
+                    &:hover {
+                        .btn-edit-todo {
+                            scale: 1;
+                        }
                     }
 
                     &.completed {

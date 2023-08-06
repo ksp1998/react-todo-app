@@ -7,7 +7,7 @@ const NewTodo = () => {
 
   const handleFormSubmit = (form: FormEvent<HTMLFormElement>) => {
     form.preventDefault();
-    if (!todo) {
+    if (!todo.trim()) {
       // Show eeror if required
       return;
     }
