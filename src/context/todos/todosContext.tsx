@@ -10,6 +10,7 @@ export interface Todo {
 interface TodosStates {
   todos?: Todo[];
   addTodo?: (todo: Todo) => void;
+  updateTodo?: (id: number, updatedTodo: Todo) => void;
   toggleTodoState?: (id: number) => void;
   removeTodo?: (id: number) => void;
   clearCompletedTodos?: () => void;

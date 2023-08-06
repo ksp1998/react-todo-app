@@ -6,7 +6,6 @@ interface Props {
 }
 
 const TodosState = ({ children }: Props) => {
-
   const todoItems: string | null = localStorage.getItem("todos");
   const localTodos: Todo[] = JSON.parse(todoItems ?? "[]");
   const [todos, setTodos] = useState<Todo[]>(localTodos);
@@ -15,6 +14,16 @@ const TodosState = ({ children }: Props) => {
     setTodos((prevTodos) => {
       return [todo, ...prevTodos];
     });
+  };
+
+  const updateTodo = (id: number, updatedTodo: Todo) => {
+    const newTodos: Todo[] = todos.map((todo: Todo) => {
+      if (todo.id === id) {
+        return updatedTodo;
+      }
+      return todo;
+    });
+    setTodos(newTodos);
   };
 
   const toggleTodoState = (id: number) => {
@@ -47,6 +56,7 @@ const TodosState = ({ children }: Props) => {
       value={{
         todos,
         addTodo,
+        updateTodo,
         toggleTodoState,
         removeTodo,
         clearCompletedTodos,
