@@ -1,44 +1,36 @@
-import { ChangeEvent, FormEvent, useState } from "react";
-import { todoItem } from "./helper/helper";
+import { FormEvent, useContext, useState } from "react";
+import todosContext, { Todo } from "../context/todos/todosContext";
+const NewTodo = () => {
+  const [todo, setTodo] = useState<string>("");
 
-interface Props {
-  todoItems: todoItem[];
-  setTodoItems: (todoItems: todoItem[]) => void;
-}
+  const { addTodo } = useContext(todosContext);
 
-const NewTodo = ({ todoItems, setTodoItems }: Props) => {
-  const [todoInput, setTodoInput] = useState<string>("");
-
-  const handleSubmit = (form: FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = (form: FormEvent<HTMLFormElement>) => {
     form.preventDefault();
-    if (!todoInput) {
+    if (!todo) {
+      // Show eeror if required
       return;
     }
 
-    const items = [
-      {
-        id: new Date().getTime(),
-        name: todoInput,
-        state: 0,
-      },
-      ...todoItems,
-    ];
-    setTodoItems(items);
-    setTodoInput("");
-  };
+    const newTodo: Todo = {
+      id: new Date().getTime(),
+      name: todo,
+      completed: false,
+      createdAt: new Date(),
+    };
 
-  const handleOnChange = (input: ChangeEvent<HTMLInputElement>) => {
-    setTodoInput(input.target.value);
+    addTodo && addTodo(newTodo);
+    setTodo("");
   };
 
   return (
-    <form className="new-todo" onSubmit={handleSubmit}>
+    <form className="new-todo" onSubmit={handleFormSubmit}>
       <input
         type="text"
         id="new-todo"
         placeholder="Create new todo..."
-        value={todoInput}
-        onChange={handleOnChange}
+        value={todo}
+        onChange={(input) => setTodo(input.target.value)}
       />
       <button id="btn-add-todo" className="todo-btn"></button>
     </form>

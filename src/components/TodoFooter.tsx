@@ -1,35 +1,25 @@
-import { todoItem } from "./helper/helper";
+import { useContext } from "react";
 import { Link, useSearchParams } from "react-router-dom";
+import todosContext, { Todo } from "../context/todos/todosContext";
 
-interface Props {
-  todoItems: todoItem[];
-  setTodoItems: (todoItems: todoItem[]) => void;
-}
-
-const TodoFooter = ({ todoItems, setTodoItems }: Props) => {
+const TodoFooter = () => {
   const [params] = useSearchParams();
   const state: string = params.get("todos") ?? "";
 
-  const handleClearCompleted = () => {
-    const items = todoItems.filter(
-      (todoItem: todoItem) => todoItem.state === 0
-    );
-    setTodoItems(items);
-  };
+  const { todos, clearCompletedTodos } = useContext(todosContext);
 
   return (
     <div className="todo-footer">
       <p className="itmes-left">
         {`${
-          todoItems.length > 0
-            ? todoItems.filter((todoItem: todoItem) => !todoItem.state).length
+          todos && todos?.length > 0
+            ? todos?.filter((todo: Todo) => !todo.completed).length
             : "No"
         } items left!`}
       </p>
       <nav className="todo-states">
         <Link
           to=""
-          // onClick={handleStateChange}
           className={`todo-state ${
             state === "all" || state === "" ? "active" : ""
           }`}
@@ -49,7 +39,7 @@ const TodoFooter = ({ todoItems, setTodoItems }: Props) => {
           Completed
         </Link>
       </nav>
-      <button id="btn-clear-completed" onClick={handleClearCompleted}>
+      <button id="btn-clear-completed" onClick={clearCompletedTodos}>
         Clear Completed
       </button>
     </div>

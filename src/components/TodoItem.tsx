@@ -1,24 +1,23 @@
-import { MouseEvent } from "react";
-import { todoItem } from "./helper/helper";
+import { useContext } from "react";
+import todosContext, { Todo } from "../context/todos/todosContext";
 
 interface Props {
-  todoItem: todoItem;
-  handleTodoState: (label: MouseEvent<HTMLLabelElement>) => void;
-  handleRemoveTodo: (btn: MouseEvent<HTMLButtonElement>) => void;
+  todo: Todo;
 }
 
-const TodoItem = ({ todoItem, handleTodoState, handleRemoveTodo }: Props) => {
+const TodoItem = ({ todo }: Props) => {
+  const { toggleTodoState, removeTodo } = useContext(todosContext);
+
   return (
-    <li className={`todo-item ${todoItem.state === 1 ? "completed" : ""}`}>
-      <label data-todoid={todoItem.id} onClick={handleTodoState}>
+    <li className={`todo-item ${todo.completed ? "completed" : ""}`}>
+      <label onClick={() => toggleTodoState && toggleTodoState(todo.id)}>
         <span className="btn-checkbox"></span>
-        <span className="todo-text">{todoItem.name}</span>
+        <span className="todo-text">{todo.name}</span>
       </label>
       <span
         id="btn-delete-todo"
         className="todo-btn"
-        data-todoid={todoItem.id}
-        onClick={handleRemoveTodo}
+        onClick={() => removeTodo && removeTodo(todo.id)}
       ></span>
     </li>
   );
