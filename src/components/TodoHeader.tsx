@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
 const TodoHeader = () => {
-  const [theme, setTheme] = useState<string | null>(
-    localStorage.getItem("theme")
+  const [theme, setTheme] = useState<string>(
+    localStorage.getItem("theme") ?? ""
   );
 
   useEffect(() => {
